@@ -30,26 +30,5 @@ t=trainer.Trainer(model=simple_minist_model.model())
 for l in t.eval(train_steam):
     print(l.item())
 
-import numpy as np
 
-torchviz.make_dot(t.model(  torch.randn(1,784).to('cuda')  ),
-                    params=dict(t.model.named_parameters())).render('./structure',format='png')
-
-
-from autoPyTorch.api.tabular_classification import TabularClassificationTask
-
-task=TabularClassificationTask()
-
-x=train_x.data.detach().numpy().reshape(60000,784)
-x=x[:,::8]
-y=train_y.data.detach().numpy()
-task.search( \
-    optimize_metric='accuracy', \
-    total_walltime_limit=300, \
-    func_eval_time_limit_secs=50, \
-    X_train=x ,\
-    y_train=y ,\
-    memory_limit=15000\
-
-)
 
